@@ -6,20 +6,38 @@ function Book(title, author, pages,read) {
 }
 
 const myLibrary = [
-    new Book("Heroes","Joe Abercrombie", 475, true), 
+    new Book("Heroes","Joe Abercrombie", 475, false), 
     new Book("Metamorphosis", "Franz Kafka", 189, true),
     new Book("Hobbit", "J.R.R. Tolkien", 259, true)];
 
 function listBook(book) {
     let card = document.createElement("div");
+    card.setAttribute("data-index", `${myLibrary.indexOf(book)}`)
     card.classList.add("card");
-    for (let index = 0; index < Object.values(book).length; index++) {
-        const entry = document.createElement("div");
-        entry.textContent = Object.values(book)[index];
-        card.appendChild(entry);
-    }
-    const library = document.querySelector(".library");
-    library.appendChild(card);
+    
+    card.innerHTML = `
+    <span class="material-symbols-outlined remove-book data-index=${myLibrary.indexOf(book)}" >
+                close
+        </span> 
+    <div class="description">     
+        <h3 class="title">${book.title}</h3>
+        <p class="author">by ${book.author}</p>
+        <p>No. of pages: ${book.pages}</p>
+    </div>
+    <div class="action-buttons">     
+        <button class="read-status">${isRead(book)}</Button>
+    </div>`;
+
+    let button = card.lastChild.lastElementChild;
+    if (book.read) button.classList.add("read");
+    const displayedLibrary = document.querySelector(".library");
+    displayedLibrary.appendChild(card);
+    toggleRead(button);
+    removeBook(card);
+}
+
+function isRead(book) {
+    return book.read ? "Read" : "Not read";
 }
 
 function listLibrary(library) {
@@ -42,6 +60,22 @@ confirmButton.addEventListener("click", () => {
     let newBook = new Book(title.value, author.value, pages.value, read.checked);
     document.querySelector("form").reset();
     dialog.close();
+    myLibrary.push(newBook);
     listBook(newBook);
 })
 
+function toggleRead (button) {
+        button.addEventListener("click", () => {
+            button.classList.toggle("read");
+            button.textContent == "Read" ? button.textContent ="Not Read" : button.textContent = "Read";
+        });
+    };
+
+function removeBook(book) {
+    console.log(book.dataset.index);
+    console.log(book.firstElementChild);
+    let bookNumber = book.dataset.index;
+    book.firstElementChild.addEventListener("click", () => {
+        book.remove();
+    });
+}

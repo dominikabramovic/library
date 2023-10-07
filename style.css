@@ -5,6 +5,7 @@ body{
     font-family: "Roboto", sans-serif;
     display: grid;
     grid-template-rows: 100px 1fr;
+    grid-template-columns: minmax(800px, 1fr);
     margin: 0;
 }
 
@@ -32,22 +33,46 @@ body{
 .library {
     padding: 50px;
     display: grid;
-    grid-template-columns: repeat(5, minmax(min-content, 250px));
+    grid-template-columns: repeat(4, minmax(175px, 250px));
     grid-template-rows: repeat(auto-fill, minmax(min-content, 300px));
     gap: 70px;
 }
 
 .card {
-    padding: 20px;
+    padding: 30px 25px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    justify-content: flex-start;
     color: white;
     letter-spacing: 3px;
     background-color: black;
-    border-radius: 4px;
+    border-radius: 2px;
 }
 
-.card > div:first-child {
-    font-size: x-large;
+.read-status {
+    background-color: black;
+    border: solid 2px white;
+    color: white;
+    font-size: large;
+    padding: 5px 20px;
+}
+
+.action-buttons{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: auto;
+}
+
+.read {
+    background-color: white;
+    color: black;
+}
+
+.title {
+    margin:6px 0px;
+}
+
+.remove-book {
+    align-self: flex-end;
 }
